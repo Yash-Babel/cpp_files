@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define lli long long int
-#define f(i, a, b) for (int i = a; i < b; i++)
+#define f(i, a, b) for (long long int i = a; i < b; i++)
 const int mod = 1000000007;
 void YN(bool possible)
 {
@@ -34,38 +34,31 @@ int main()
     cin >> t;
     while (t--)
     {
-        int n;
-        cin >> n;
-        int arr[n];
-        int even = 0, odd = 0;
-        f(i, 0, n)
+        lli n, k;
+        cin >> n >> k;
+        if (k > (n * (n - 1)) / 2)
         {
-            cin >> arr[i];
-        }
-        sort(arr, arr + n);
-        f(i, 0, n - 1)
-        {
-            even += ((arr[n - 1] - arr[i]) / 2) * 2;
-            odd += ((arr[n - 1] - arr[i]) % 2);
-        }
-        int answer = 0;
-        if (even / 2 == odd)
-        {
-            answer += even;
-        }
-        else if (even / 2 > odd)
-        {
-            answer += odd * 2;
-            even -= odd * 2;
-            answer += ((even / 3) * 2 + (even % 3));
+            cout << -1;
         }
         else
         {
-            answer += even;
-            odd -= even / 2;
-            answer += 2 * odd - 1;
+            lli start = 1, end = n;
+            for (lli i = n - 1; i >= 0; i--)
+            {
+                if (k >= i)
+                {
+                    k -= i;
+                    cout << end << ' ';
+                    end--;
+                }
+                else
+                {
+                    cout << start << ' ';
+                    start++;
+                }
+            }
         }
-        cout << answer << '\n';
+        cout << '\n';
     }
     return 0;
 }

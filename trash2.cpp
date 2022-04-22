@@ -15,33 +15,7 @@ void YN(bool possible)
         cout << "NO\n";
     }
 }
-lli gcd(lli a, lli b)
-{
-    if (b == 0)
-        return a;
-    else
-        return gcd(b, a % b);
-}
-int mex(int arr[], int n)
-{
-    int MEXMinusOne = -1;
-    f(i, 0, n)
-    {
-        if (arr[i] == MEXMinusOne + 1)
-        {
-            MEXMinusOne++;
-        }
-        else if (arr[i] == MEXMinusOne)
-        {
-            continue;
-        }
-        else
-        {
-            break;
-        }
-    }
-    return (MEXMinusOne + 1);
-}
+
 int main()
 {
 #ifndef ONLINE_JUDGE
@@ -51,53 +25,79 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(0);
-    int t;
+    int t = 1;
     cin >> t;
     while (t--)
     {
-        int n;
+        int n, tmp, even = 0, odd = 0;
         cin >> n;
         int arr[n];
+        int answer = 1e9;
         f(i, 0, n)
         {
-            cin >> arr[i];
+            cin >> tmp;
+            if (tmp % 2 == 0)
+            {
+                even++;
+            }
+            else
+            {
+                odd++;
+            }
+            arr[i] = tmp;
         }
-        sort(arr, arr + n);
-        int MEX = mex(arr, n);
-        if (MEX == 1)
+        int sameBefore, sameNotBefore = 0, diffAfter = 0, diffNotAfter, isOdd;
+        if (arr[0] % 2 == 0)
         {
-            cout << -1;
-        }
-        else if (MEX == 0)
-        {
-            cout << arr[0] - 1;
+            isOdd = 0;
+            sameBefore = even;
+            diffNotAfter = odd;
         }
         else
         {
-            int answer = 0;
-            int count = 1;
-            f(i, 1, n)
+            isOdd = 1;
+            sameBefore = odd;
+            diffNotAfter = even;
+        }
+        if (diffNotAfter == 0)
+        {
+            cout << n << '\n';
+        }
+        else if ((arr[0] % 2) ^ (arr[n - 1] % 2) == 0)
+        {
+            cout << (sameBefore - 1) << '\n';
+        }
+        else
+        {
+            for (int i = n - 1; i > 0; i--)
             {
-                if (arr[i] - arr[i - 1] != 1)
+                int parity = arr[i] % 2;
+                if (parity ^ isOdd == 1)
                 {
-                    if (count >= MEX - 1)
+                    diffAfter++;
+                    diffNotAfter--;
+                    if ((arr[i - 1] % 2) ^ (arr[i] % 2) == 0)
                     {
-                        answer++;
+                        continue;
                     }
-                    count = 1;
+                }
+                if (diffNotAfter == 0)
+                {
+                    tmp = diffAfter;
                 }
                 else
                 {
-                    count++;
+                    tmp = (sameBefore - 1 + diffAfter);
+                }
+                answer = min(answer, tmp);
+                if (parity ^ isOdd == 0)
+                {
+                    sameBefore--;
+                    sameNotBefore++;
                 }
             }
-            if (count >= MEX - 1)
-            {
-                answer++;
-            }
-            cout << answer - 1;
+            cout << min(answer, n) << '\n';
         }
-        cout << '\n';
     }
     return 0;
 }

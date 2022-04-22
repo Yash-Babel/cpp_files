@@ -4,7 +4,7 @@ using namespace std;
 #define f(i, a, b) for (int i = a; i < b; i++)
 const int mod = 1000000007;
 
-const int N = 2 * 1e5 + 1;
+const int N = 1e6 + 1;
 
 void YN(bool possible)
 {
@@ -61,29 +61,26 @@ int main()
         vector<pair<lli, lli>> h_eqM(N, {0, 0});
         lli BWH[n];
         lli CWE[m];
-        f(i, 0, n)
+        for (lli i = 0; i < n; i++)
         {
             cin >> BWH[i];
         }
-        f(i, 0, n)
+        for (lli i = 0; i < n; i++)
         {
             cin >> tmp;
             h_eqM[BWH[i]].first = tmp;
         }
-        f(i, 0, m)
+        for (lli i = 0; i < m; i++)
         {
             cin >> CWE[i];
         }
-        f(i, 0, m)
+        for (lli i = 0; i < m; i++)
         {
             cin >> tmp;
             h_eqM[CWE[i]].second = tmp;
         }
         lli currentQuake = 0;
-        // lli subtractingFactor = 0;
-        // lli SFR[N]{0};
-
-        f(i, 1, N)
+        for (lli i = 1; i < N; i++)
         {
             if (h_eqM[i].second > currentQuake)
             {
@@ -99,7 +96,7 @@ int main()
             }
         }
         currentQuake = 0;
-        for (int i = N - 1; i > 0; i--)
+        for (lli i = N - 1; i > 0; i--)
         {
             if (h_eqM[i].second > currentQuake)
             {
@@ -115,7 +112,7 @@ int main()
             }
         }
         int answer = 0;
-        for (int i = 0; i < n; i++)
+        for (lli i = 0; i < n; i++)
         {
             if (h_eqM[BWH[i]].first + h_eqM[BWH[i]].second > 0)
             {

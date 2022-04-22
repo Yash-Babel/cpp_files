@@ -1,0 +1,1 @@
+comp .\expout.txt .\out.txt /D /L /M

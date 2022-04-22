@@ -22,21 +22,32 @@ int main()
     freopen("in.txt", "r", stdin);
     freopen("out.txt", "w", stdout);
 #endif
-    int i1 = 30;
-    int i2 = 30; //(i2 * (i2 + 1) * 3) / 2
-    int i3 = 20;
-    int answer = 0;
-    f(i, 1, i1 + 1)
+    lli n, k, m;
+    cin >> n >> k >> m;
+    if (k == 0)
     {
-        f(j, 1, i2 + 1)
-        {
-            f(k, 0, i3 + 1)
-            {
-                answer += (i & j & k);
-            }
-            // cout << i << " & " << j << " = " << (i & j) << '\n';
-        }
+        cout << n % m << "\n";
     }
-    cout << answer;
+    else
+    {
+        lli quotient = n / m;
+        lli remainder = n % m;
+        lli ans = 0;
+        lli extra = 0;
+        f(i, 1, m)
+        {
+            lli tmp = binpow(i, k, m);
+            ans += tmp;
+            ans %= m;
+            if (i == remainder)
+            {
+                extra = ans;
+            }
+        }
+        lli answer = ((quotient % m) * (ans % m)) % m;
+        answer += (extra % m);
+        answer %= m;
+        cout << answer << "\n";
+    }
     return 0;
 }
